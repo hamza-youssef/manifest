@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: insomea-frontend
+  labels:
+    app: insomea-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: insomea-frontend
+  template:
+    metadata:
+      labels:
+        app: insomea-frontend
+    spec:
+      containers:
+      - name: insomea-frontend
+        image: hamzayyoussef/insomeafrontend:167
+        ports:
+        - containerPort: 3000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: insomea-frontend-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: 3000
+  selector:
+    app: insomea-frontend

@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: supplier-microservice
+  labels:
+    app: supplier-microservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: supplier-microservice
+  template:
+    metadata:
+      labels:
+        app: supplier-microservice
+    spec:
+      containers:
+      - name: supplier-microservice
+        image: hamzayyoussef/suppliermicroservice:163
+        ports:
+        - containerPort: 9090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: supplier-microservice-service
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 9090
+  selector:
+    app: supplier-microservice
